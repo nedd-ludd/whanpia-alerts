@@ -10,7 +10,7 @@
 
 Whanpia is a discrete application hosted on, and leveraging cloud services of AWS and Telnyx online Calling/ Messaging platform. It parses and scans an incoming email for keywords or phrases, automatically forwarded from a users email service, which could potentially indicate hacking of their social-media account. It automatically messages & calls the user and plays a pre-recorded audio when the user picks up the call.
 
-![Alt text](image.png)
+![Alt text](images/image.png)
 
 # Project Background
 
@@ -232,13 +232,13 @@ Leverage AWS Cloud computing services.
   <tbody>
     <tr>
       <td align="center">
-        <img src="./image-1.png" alt="Image 1" height="400">
+        <img src="images/image-1.png" alt="Image 1" height="300">
       </td>
       <td align="center">
-        <img src="./call.png" alt="Image 2" height="400">
+        <img src="images/call.png" alt="Image 2" height="300">
       </td>
       <td align="center">
-        <img src="./text-1.png" alt="Image 3" height="400">
+        <img src="images/text-1.png" alt="Image 3" height="300">
       </td>
     </tr>
   </tbody>
