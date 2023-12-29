@@ -1,10 +1,8 @@
 # STANDARD LIBRARY
 from email.message import Message
 import email
-
-# LAMBDA LAYERS
-# from flask import Flask, request
 import boto3
+
 
 def email_in(event):
     # first code will fetch fromaddress, subject and messageId
@@ -36,5 +34,5 @@ def email_in(event):
         if type(payload) is bytes:
             msg_text = payload.decode('utf-8')  # utf-8 is default
             print('*** Single payload ****', msg_text)
-            
+
     return msg_text

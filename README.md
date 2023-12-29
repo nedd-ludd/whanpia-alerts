@@ -4,6 +4,8 @@
 
 **N.B.**: This README is fairly comprehensive; if you don't have time to read it all, please message me.
 
+???rewrite above.
+
 # Project Overview
 
 Whanpia is a discrete application hosted on, and leveraging cloud services of AWS and Telnyx online Calling/ Messaging platform. It parses and scans an incoming email for keywords or phrases, automatically forwarded from a users email service, which could potentially indicate hacking of their social-media account. It automatically messages & calls the user and plays a pre-recorded audio when the user picks up the call.
@@ -54,10 +56,11 @@ git@github.com:nedd-ludd/whanpia-alerts-layers.git
 - Zip & upload "logic" code to AWS Lambda
 - Configure permissions for WorkMail/AWS Lambda using AWS CLI
 - Create inbound rule - organisation settings
+  add emails to inbound rule?
 
 <mark>what about the emails from facebook for CONTACT NAME</mark>
 
-- Upload libraries to AWS Lambda layers
+- Zip & upload packages to AWS Lambda layers
 - Link Lambda layer to code
 - Create second Lambda Function with \<name>
 - Zip & upload "webhook" code to AWS Lambda
@@ -68,40 +71,68 @@ git@github.com:nedd-ludd/whanpia-alerts-layers.git
 - Create AWS S3 Bucket & upload audio
 - Configure S3 bucket public access -was this IAM???
 - In E-mail service provider, forward emails from specific socials email address to service.
+- Add environment variables
 
 # Testing
 
-link to json
+- Send an email to WorkMail containing one of the keywords within helpers.py
+- Using Amazon CloudTrail, retrieve the messageId and replace the placeholder in below JSON snippet.
+
+```json
+  "sender": {
+    "address": "sender@domain.test"
+  },
+  "subject": "Hello From Amazon WorkMail!",
+  "messageId": "REPLACE_MSG_ID_HERE",
+
+```
+
+- Within the lambda function page, select the "Test" tab.
+- Create new test event and give name.
+- Enter the complete JSON from "incoming_mail_test.json"
+- Within lambda_function.py change test to True:
+
+```
+test = False   ----> test = Talse
+```
+
+If test = True, the TESTER environment variable (telephone number) will be the recipient. This requires returning to False and then the CUSTOMER will receive notifications.
 
 # Project Goals
-
-# Approach / planning / brief / response / ideas
 
 My overarching goal for this project was:
 
 _"Educate myself in AWS cloud computing & online Telephone services, by creating a Python-based alert system, triggered by email notifications, helping assist with cybersecurity incident response."_
 
-Investigate original vunreability. The exact vunerability was difficult to identify.
-visibility and support from facebook.
-pinpoint the vunerability
-Initial research returned the possibility of cookie theft, which could of explained the bypass of 2FA.
-Alternatively, the users gmail account could be compromised.
-Sources of this could include malware accidentally installed, or malicious google extensions.
+## Planning / brief / response / ideas
 
-review google logons
-review facebook logins
-log out of all sessions
-make a copy of all logons on passwords using password manager
-reinstall macOS
-reset passwords from different machine
-
-There was also the potential for the vunerability to be facebook-side, and if this was the case, we needed a last line of defence to spot suspicious activity or a hack as its happening.
-
-This led to the idea of an automated call / message service that could contact the user at any hour. If the alert number was added to iPhone emergency contacts, calls could come through even if phone was in sleep or work mode.
-
-If a hacker had logged on, ad-spend for facebook ads manager could be monitored or temporarily deactivated. As well as alerting facebook to the activity.
+Once it was decided to create software to help..see below..., I was able to generate a brief
 
 Self Brief
+Use a Telephone/ Messaging platform.
+Leverage AWS Cloud computing services.
+
+## Technical Requirements
+
+- Receive & scan content from social media email notifications.
+- If certain indicators present, run code to:
+  - Send notification text.
+  - Make a notification call.
+  - Play funny/ light-hearted audio on notification call
+
+## Deliverables
+
+- Codebase hosted on AWS.
+- Instructions for end-user.
+- Codebase deployed to GitHub repo.
+- A README.md for the project:
+  - The Whats, Whys, and Hows.
+  - Key/ Important details.
+  - Approach & Methods.
+  - The Results.
+  - What was learned.
+  - What went well/ not.
+  - How to recreate.
 
 # Technologies Used
 
@@ -188,23 +219,91 @@ Self Brief
   </tbody>
 </table>
 
-# Demonstration
+# Result
 
-<mark>Need screen record of test</mark>
+<table>
+  <thead>
+    <tr>
+      <th>Forwarded Trigger Email</th>
+      <th>Call & Audio</th>
+      <th>Text Notification</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">
+        <img src="./image-1.png" alt="Image 1" height="400">
+      </td>
+      <td align="center">
+        <img src="./call.png" alt="Image 2" height="400">
+      </td>
+      <td align="center">
+        <img src="./text-1.png" alt="Image 3" height="400">
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+Listen to [Audio by Snoop Dogg using speechify](https://snoop-alert.s3.amazonaws.com/snoop.mp3)
+
+_"What-up \<recipient name>! Snoop D O double-g here. I've noticed some suspicious-a\*\* s\*\*\* goin on wit yow account, wondered if you could check that s\*\*\* out. Peace!"_
 
 # Process
+
+Without delay I wanted to investigate what the original problem was, try to help where possible at fixing. Then moved on to considering software to help.
+
+## Fixes
+
+Investigate attack, Implement any fixes.
+Investigate avilable Technologies.
+
+Investigate original vunreability. The exact vunerability was difficult to identify.
+visibility and support from facebook.
+pinpoint the vunerability
+Initial research returned the possibility of cookie theft, which could of explained the bypass of 2FA.
+Alternatively, the users gmail account could be compromised.
+Sources of this could include malware accidentally installed, or malicious google extensions.
+
+review google logons
+review facebook logins
+log out of all sessions
+make a copy of all logons on passwords using password manager
+reinstall macOS
+reset passwords from different machine
+
+There was also the potential for the vunerability to be facebook-side, and if this was the case, we needed a last line of defence to spot suspicious activity or a hack as its happening.
+
+This led to the idea of an automated call / message service that could contact the user at any hour. If the alert number was added to iPhone emergency contacts, calls could come through even if phone was in sleep or work mode.
+
+If a hacker had logged on, ad-spend for facebook ads manager could be monitored or temporarily deactivated. As well as alerting facebook to the activity.
+
+## Planning
+
+Investigates available technologies
+Had a rough idea of what services could be used, Twilio, Telnyx, AWS Lambda
 
 ## General
 
 De-risked - went for key functional parts and tested locally
-testing as went
+testing as went so far as possible
+keeping notes
+using trello to track work
 <mark>screen shot of trello</mark>
-
-## Planning
-
-## General
+spending time researching problems as they occur
 
 ## Debugging / Testing
+
+Telnyx Locally
+
+## Execution
+
+The successful order of development was the same as listed in the [Getting Started](#getting-started) section. However due to uknown route and educational emphasis, a lot of experimentation, failure, and dead-ends were experienced, meaning there was alot of abortive work not mentioned.
+
+Salient points, chat gpt, seperation of logic like code functions, endpoint like microservices
+
+Code snippets that I find interesting or believe to be important are included.
+
+There are also mentions of the key failures.
 
 # Code Snippets
 
@@ -227,6 +326,7 @@ aws --region REGION lambda add-permission --function-name MY_FUNCTION_NAME
 
 # Wins
 
+Goal ultimately achieved?
 Got something working quickly, and crudely
 Unfamiliar ??landscape, field
 Learnt alot and really enjoyed the project
@@ -235,7 +335,13 @@ Contact was very happy with the result
 # Challenges & Solutions
 
 Unfamiliar technologies, solved by approach, breaking things down, aborting work
+
+## Finding Technologies
+
 Was originally going to use Twilio, couldnt get verified, used Telnyx
+Hard to get approval for UK numbers - probably to do with amount of scam calls.
+
+## Testing Locally
 
 ## Packaging and deployment
 
@@ -247,8 +353,11 @@ Packaging, dependency, python versions, tried seperate layers, solved by creatin
 Telnyx docs not entirely clear, trial and error
 Return Webhooks, make code complicated, seperation of concerns and make another lambda function
 
+## Use of GUI
+
 # Bugs / Future Improvements / Could of done Better
 
+Keep calling till pick up
 Windows Subsystem For Linux or just throw away Windows Machine
 Logging
 Testing
@@ -259,7 +368,7 @@ AWS SAM
 # Key Learnings
 
 Basic understanding of Cyber Secutiry.
-Hard to get approval for UK numbers - probably to do with amount of scam calls.
+
 Familiarity with AWS services, their functions and potential uses.
 
 Could of used GitHub to start with to ensure code was backed up other than local.
