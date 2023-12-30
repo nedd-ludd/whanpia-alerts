@@ -15,16 +15,6 @@ def CHECK_CONTENT(email_content):
 
     # If there are matches, return True; otherwise, return False
     return bool(matches)
-    
-def EVENT_TYPE_REST(event):
-    """Returns bool of true if email event is incoming to lambda handler, if not...i.e webhook for call controls, will return false."""
-    result = False
-    for k, v in event.items():
-        if k == "httpMethod":
-            result = True
-        elif type(k) == dict:
-            EVENT_TYPE_REST(v)
-    return result
 
 
 if __name__ == "__main__":
@@ -33,9 +23,9 @@ if __name__ == "__main__":
     html_email_content = "<p>This is another email with the phrase 'secure your account'.</p>"
 
     # Test the plaintext email content
-    result_plaintext = check_email_content(plaintext_email_content)
+    result_plaintext = CHECK_CONTENT(plaintext_email_content)
     print("Plaintext email content:", result_plaintext)
 
     # Test the HTML email content
-    result_html = check_email_content(html_email_content)
+    result_html = CHECK_CONTENT(html_email_content)
     print("HTML email content:", result_html)
